@@ -16,6 +16,7 @@ const GithubProvider = ({ children }) => {
   const [requests, setRequest] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({ show: false, msg: "" });
+  console.log(githubUser);
 
   const checkRequests = () => {
     axios(`${rootUrl}/rate_limit`)
@@ -38,6 +39,7 @@ const GithubProvider = ({ children }) => {
 
   const searchGithubUsers = async (user) => {
     ErrorToggle();
+    setLoading(true);
     const response = await axios(`${rootUrl}/users/${user}`).catch((err) =>
       console.log(err)
     );
@@ -47,6 +49,8 @@ const GithubProvider = ({ children }) => {
     } else {
       ErrorToggle(true, "user not found");
     }
+    setLoading(false);
+    setRequest();
   };
   useEffect(checkRequests, []);
   return (
@@ -58,6 +62,7 @@ const GithubProvider = ({ children }) => {
         requests,
         error,
         searchGithubUsers,
+        loading,
       }}>
       {children}
     </GithubContext.Provider>

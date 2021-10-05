@@ -4,7 +4,7 @@ import { MdSearch } from "react-icons/md";
 import { GithubContext } from "../context/context";
 const Search = () => {
   const [user, setUser] = React.useState("");
-  const { requests, error, searchGithubUsers } =
+  const { requests, error, searchGithubUsers, loading } =
     React.useContext(GithubContext);
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -30,7 +30,7 @@ const Search = () => {
               value={user}
               onChange={(e) => setUser(e.target.value)}
             />
-            {requests > 0 && <button type='submit'>Search</button>}
+            {requests > 0 && !loading && <button type='submit'>Search</button>}
           </div>
         </form>
         <h3>Request:{requests}/60</h3>
